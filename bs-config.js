@@ -1,4 +1,5 @@
 
+require('dotenv').config();
 /*
  |--------------------------------------------------------------------------
  | Browser-sync config file
@@ -16,11 +17,11 @@ module.exports = {
     "ui": {
         "port": 3001
     },
-    "files": "./wp/wp-content/themes/neopa/**/*",
+    "files": `./wp/wp-content/themes/${process.env.NODE_PROJECT}/**/*.php`,
     "watchEvents": [
         "change"
     ],
-    "watch": false,
+    "watch": true,
     "ignore": [],
     "single": false,
     "watchOptions": {
@@ -34,7 +35,7 @@ module.exports = {
     //         next();
     //     }
     // },
-    "proxy": "localhost:8080",
+    "proxy": `localhost:${process.env.NODE_PORT}`,
     "port": 3000,
     "middleware": false,
     "serveStatic": [],
@@ -49,7 +50,7 @@ module.exports = {
         }
     },
     "logLevel": "info",
-    "logPrefix": "Browsersync",
+    "logPrefix": "ぶらうざ〜しんく！",
     "logConnections": false,
     "logFileChanges": true,
     "logSnippet": true,

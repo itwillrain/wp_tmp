@@ -1,0 +1,10 @@
+FROM primestrategy/kusanagi-php7:7.0.6-1
+
+#必要なツールをインストール
+RUN apk --update add curl wget sudo vim mysql-client && rm -rf /var/cache/apk/*
+RUN curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar > /tmp/wp-cli.phar \
+    && chmod +x /tmp/wp-cli.phar \
+    && mv /tmp/wp-cli.phar /usr/local/bin/wp
+
+COPY ./init.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/init.sh

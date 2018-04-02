@@ -1,0 +1,52 @@
+version: '2'
+
+services:
+  kusanagi-data:
+    container_name: ${PROJECT}-data
+    image: busybox
+    restart: always
+    stdin_open: true
+    tty: true
+    volumes:
+      - /var/lib/mysql
+      - /etc/nginx/conf.d
+      - /etc/httpd/conf.d
+      - /etc/kusanagi.d
+      - /home/kusanagi
+      - ./wp:/home/kusanagi/kusanagi/DocumentRoot/
+    command: /bin/sh
+  
+  kusanagi-nginx:
+    container_name: ${PROJECT}-nginx
+    image: primestrategy/kusanagi-nginx:1.10.0-1
+    environment:
+      PROFILE: kusanagi
+      FQDN: neopa.dev
+      WPLANG: ja
+      BCACHE: "off"
+      FCACHE: "off"
+    volumes_from:
+      - kusanagi-data
+    links:
+      - kusanagi-php7:php
+    ports:
+      - "${PORT}:80"
+  
+  kusanagi-mariadb:
+    container_name: ${PROJECT}-mariadb
+    image: mariadb:10.0.24
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_USER:     admin
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: wordpress
+    volumes_from:
+      - kusanagi-data
+  
+  kusanagi-php7:
+    container_name: ${PROJECT}-php7
+    build: ./app
+    links:
+      - kusanagi-mariadb:mysql
+    volumes_from:
+      - kusanagi-data

@@ -1,0 +1,24 @@
+{
+  "name": "neo_wp",
+  "version": "1.0.0",
+  "description": "初期化する `sh init.sh` プロジェクト名など聞かれるので入力する config.sh作成されます。",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "browser-sync": "^2.23.6",
+    "dotenv": "^5.0.1",
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.10"
+  },
+  "scripts": {
+    "build": "webpack",
+    "dev": "browser-sync start --config bs-config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.neopa.jp:matsushita/wp-tmp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
